@@ -2,7 +2,7 @@
   "game": [
     {
       "id": 1,
-      "gamePoster": "https://github.com/shahhussain27/gamehub/blob/master/public/gamePoster.jpg?raw=true",
+      "gamePoster": "https://github.com/shahhussain27/gamehub/blob/master/public/gamePoster/carrotHunter.jpg?raw=true",
       "title": "CarrotHunter",
       "price": 0,
       "isFree": true,
