@@ -2,9 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 
+
 const SideBar = () => {
+
   return (
-    <div className=" flex h-screen ">
+    <div className="flex h-screen max-sm:hidden">
       <div className="bg-background border-r border-border w-64 transition-all data-[collapsed=true]:w-16 data-[collapsed=true]:px-2">
         <div className="flex h-16 items-center justify-between px-4">
           <Link
