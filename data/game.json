@@ -1,0 +1,15 @@
+{
+  "game": [
+    {
+      "id": 1,
+      "gamePoster": "https://github.com/shahhussain27/gamehub/blob/master/public/gamePoster.jpg?raw=true",
+      "title": "CarrotHunter",
+      "price": 0,
+      "isFree": true,
+      "category": "adventure",
+      "platforms": ["mobile", "windows"],
+      "devices": ["android", "ios", "windows", "web"],
+      "downloadLink": "https://github.com/shahhussain27/gamehub/raw/master/games/mobile/android/CarrotHunter.apk"
+    }
+  ]
+}

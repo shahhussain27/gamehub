@@ -51,8 +51,8 @@ export const topbar = [
         label: "Web",
       },
       {
-        filter: "pc",
-        label: "PC",
+        filter: "windows",
+        label: "Windows",
       },
     ],
   },
