@@ -21,7 +21,7 @@ export const sidebarLinks = [
   },
 ];
 
-export const topbar = [
+export const sideBarOptions = [
   {
     name: "Price",
     options: [

@@ -73,7 +73,7 @@ const Main = () => {
                     </span>
                   </div>
                 </div>
-                <a href="" download>
+                <a href={game.downloadLink} download>
                   <button className="w-full bg-black hover:bg-white text-white hover:text-black py-1.5 rounded-full">
                     DOWNLOAD (29 MB)
                   </button>
@@ -82,7 +82,7 @@ const Main = () => {
             </div>
           </div>
         </div>
-      ))} 
+      ))}
     </>
   );
 };
