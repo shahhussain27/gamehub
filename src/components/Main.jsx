@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import gameImg from "../../public/gamePoster/carrotHunter.jpg";
 import Image from "next/image";
 import { IoLogoAndroid, IoLogoApple } from "react-icons/io";
 import { FaWindows } from "react-icons/fa";
