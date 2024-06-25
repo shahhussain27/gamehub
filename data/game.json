@@ -7,9 +7,10 @@
       "price": 0,
       "isFree": true,
       "category": "adventure",
-      "platforms": ["mobile", "windows"],
+      "platforms": ["mobile", "windows", "web"],
       "devices": ["android", "ios", "windows", "web"],
-      "downloadLink": "https://github.com/shahhussain27/gamehub-data/raw/main/games/GameHunter/mobile/android/CarrotHunter.apk"
+      "downloadLink": "https://github.com/shahhussain27/gamehub-data/raw/main/games/GameHunter/mobile/android/CarrotHunter.apk",
+      "gameSize": "29 MB"
     }
   ]
 }

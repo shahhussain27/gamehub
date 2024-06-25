@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
-
+import logo from "../../public/gamehub.png";
+import Image from "next/image";
 
 const SideBar = () => {
-
   return (
     <div className="flex h-screen max-sm:hidden">
       <div className="bg-background border-r border-border w-64 transition-all data-[collapsed=true]:w-16 data-[collapsed=true]:px-2">
@@ -14,6 +14,13 @@ const SideBar = () => {
             className="flex items-center gap-2 font-bold"
             prefetch={false}
           >
+            <Image
+              src={logo}
+              alt="gamehub"
+              height={100}
+              width={100}
+              className="w-10 h-10"
+            />
             <span className="text-lg">GameHub</span>
           </Link>
         </div>

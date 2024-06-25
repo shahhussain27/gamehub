@@ -20,7 +20,7 @@ const Hero = () => {
           <div className="flex justify-center items-start  gap-4">
             <button>
               <Link
-                href={"/home"}
+                href={"/login"}
                 className="inline-flex h-10 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-8 text-sm font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 prefetch={false}
               >
@@ -29,7 +29,7 @@ const Hero = () => {
             </button>
             <button>
               <Link
-                href="#"
+                href={"/signup"}
                 className="inline-flex h-10 items-center justify-center rounded-full bg-slate-950 hover:bg-slate-900 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 prefetch={false}
               >

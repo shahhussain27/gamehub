@@ -54,7 +54,9 @@ const Main = () => {
             >
               <div className="flex flex-col items-center justify-between text-white mb-4">
                 <h2 className="text-xl font-bold">CarrotHunter</h2>
-                <div className="text-2xl font-bold text-primary">Free</div>
+                <div className="text-2xl font-bold text-primary">
+                  {game.isFree ? "Free" : "₹" + game.price}
+                </div>
               </div>
               <div className="grid gap-4 text-white">
                 <div>
@@ -75,7 +77,7 @@ const Main = () => {
                 </div>
                 <a href={game.downloadLink} download>
                   <button className="w-full bg-black hover:bg-white text-white hover:text-black py-1.5 rounded-full">
-                    DOWNLOAD (29 MB)
+                    DOWNLOAD ({game.gameSize})
                   </button>
                 </a>
               </div>

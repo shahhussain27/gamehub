@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import logo from "../../public/gamehub.png";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -7,7 +9,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
-            <GamepadIcon className="w-8 h-8" />
+            <Image
+              src={logo}
+              alt="gamehub"
+              height={150}
+              width={150}
+              className="w-10 h-10"
+            />
             <span className="text-2xl font-bold">GameHub</span>
           </Link>
           <p className="text-sm text-gray-400">
@@ -112,28 +120,6 @@ function FacebookIcon(props) {
   );
 }
 
-function GamepadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="6" x2="10" y1="12" y2="12" />
-      <line x1="8" x2="8" y1="10" y2="14" />
-      <line x1="15" x2="15.01" y1="13" y2="13" />
-      <line x1="18" x2="18.01" y1="11" y2="11" />
-      <rect width="20" height="12" x="2" y="6" rx="2" />
-    </svg>
-  );
-}
 
 function InstagramIcon(props) {
   return (

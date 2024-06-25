@@ -17,15 +17,17 @@ const Navbar = () => {
     <>
       <nav className="flex justify-between items-center bg-black text-gray-200 h-[40px] px-36 max-sm:px-4">
         <ul className="flex items-center  gap-6 text-xs ">
-          <Image
-            src={logo}
-            alt="game-hub"
-            width={30}
-            height={30}
-            className=""
-          />
+          <Link href={"/"}>
+            <Image
+              src={logo}
+              alt="game-hub"
+              width={30}
+              height={30}
+              className=""
+            />
+          </Link>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            Games
+            <Link href={"/home"}>Games</Link>
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
             Community{" "}
@@ -34,7 +36,7 @@ const Navbar = () => {
             News{" "}
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            About
+            <Link href={"/about"}>About</Link>
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
             Contact
@@ -42,7 +44,7 @@ const Navbar = () => {
         </ul>
         <button>
           <Link
-            href="#"
+            href={"/login"}
             className="max-sm:hidden inline-flex h-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-5 text-xs font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             prefetch={false}
           >
@@ -69,18 +71,40 @@ const Navbar = () => {
             </button>
           </div>
           <ul className="flex flex-col items-center justify-center gap-6 text-xs ">
-            <Image
-              src={logo}
-              alt="game-hub"
-              width={30}
-              height={30}
-              className=""
-            />
-            <li className="cursor-pointer hover:text-white ">Games</li>
+            <Link href={"/"} onClick={toggleDrawer}>
+              <Image
+                src={logo}
+                alt="game-hub"
+                width={30}
+                height={30}
+                className=""
+              />
+            </Link>
+            <li className="cursor-pointer hover:text-white ">
+              {" "}
+              <Link href={"/home"} onClick={toggleDrawer}>
+                Games
+              </Link>
+            </li>
             <li className="cursor-pointer hover:text-white ">Community</li>
             <li className="cursor-pointer hover:text-white ">News </li>
-            <li className="cursor-pointer hover:text-white ">About</li>
+            <li className="cursor-pointer hover:text-white ">
+              {" "}
+              <Link href={"/about"} onClick={toggleDrawer}>
+                About
+              </Link>
+            </li>
             <li className="cursor-pointer hover:text-white">Contact</li>
+            <button>
+              <Link
+                href={"/login"}
+                className="inline-flex h-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-12 text-xs font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                prefetch={false}
+                onClick={toggleDrawer}
+              >
+                Login
+              </Link>
+            </button>
           </ul>
         </div>
       </Drawer>
