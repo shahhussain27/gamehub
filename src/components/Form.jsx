@@ -24,7 +24,7 @@ const Form = () => {
             <form className="grid grid-cols-3 max-sm:grid-cols-1 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="posterUrl">Game Poster URL</Label>
-                <Input id="posterUrl" placeholder="Poster URL" />
+                <Input id="posterUrl" placeholder="Game Poster URL" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="title">Game Title</Label>
