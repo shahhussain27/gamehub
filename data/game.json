@@ -2,7 +2,7 @@
   "game": [
     {
       "id": 1,
-      "gamePoster": "https://github.com/shahhussain27/gamehub-data/blob/main/games/GameHunter/carrotHunter.jpg?raw=true",
+      "gamePoster": "https://raw.githubusercontent.com/shahhussain27/gamehub-data/main/games/GameHunter/carrotHunter.jpg?token=GHSAT0AAAAAACSLRLH7XPRWPY2ZBNQI3VU2ZT4NDBA",
       "title": "CarrotHunter",
       "price": "free",
       "platforms": ["android", "ios", "windows", "browser"],
