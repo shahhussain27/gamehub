@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Hero = () => {
+  const { data: session } = useSession();
+
   return (
     <section
       className="w-full relative h-[80vh] flex items-center justify-center bg-cover bg-center"
@@ -17,26 +20,52 @@ const Hero = () => {
           <p className="text-lg text-gray-200 text-muted-foreground md:text-xl">
             Stay Ahead with the Latest News, Reviews, and Community Updates
           </p>
-          <div className="flex justify-center items-start  gap-4">
-            <button>
-              <Link
-                href={"/login"}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-8 text-sm font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                Login
-              </Link>
-            </button>
-            <button>
-              <Link
-                href={"/signup"}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-slate-950 hover:bg-slate-900 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                prefetch={false}
-              >
-                Sign Up
-              </Link>
-            </button>
-          </div>
+          {!session && (
+            <div className="flex justify-center items-start  gap-4">
+              <button>
+                <Link
+                  href={"/login"}
+                  className="inline-flex h-10 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-8 text-sm font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  prefetch={false}
+                >
+                  Login
+                </Link>
+              </button>
+              <button>
+                <Link
+                  href={"/signup"}
+                  className="inline-flex h-10 items-center justify-center rounded-full bg-slate-950 hover:bg-slate-900 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  prefetch={false}
+                >
+                  Sign Up
+                </Link>
+              </button>
+            </div>
+          )}
+          {session && (
+            <div className="flex justify-center items-start  gap-4">
+              {session.user?.email === "gamerxpro786@gmail.com" && (
+                <button>
+                  <Link
+                    href={"/dashboard"}
+                    className="inline-flex uppercase h-10 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-8 text-sm font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                    prefetch={false}
+                  >
+                    Dashboard
+                  </Link>
+                </button>
+              )}
+              <button>
+                <Link
+                  href={"/home"}
+                  className="inline-flex uppercase h-10 items-center justify-center rounded-full bg-slate-950 hover:bg-slate-900 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  prefetch={false}
+                >
+                  Download
+                </Link>
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-90 z-0" />

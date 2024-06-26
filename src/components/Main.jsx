@@ -24,6 +24,19 @@ const Main = () => {
 
   return (
     <>
+      <div className="flex items-center w-full max-w-md bg-background rounded-lg border border-input shadow-sm mb-4">
+        <input
+          type="search"
+          placeholder="Search..."
+          className="flex-1 px-4 py-2 rounded-md bg-transparent outline-none"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 rounded-r-lg bg-black text-white"
+        >
+          Search
+        </button>
+      </div>
       {gameData.map((game, index) => (
         <div
           key={game.id}
@@ -55,7 +68,7 @@ const Main = () => {
               <div className="flex flex-col items-center justify-between text-white mb-4">
                 <h2 className="text-xl font-bold">CarrotHunter</h2>
                 <div className="text-2xl font-bold text-primary">
-                  {game.isFree ? "Free" : "₹" + game.price}
+                  {typeof game.price !== "number" ? "Free" : "₹" + game.price}
                 </div>
               </div>
               <div className="grid gap-4 text-white">

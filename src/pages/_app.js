@@ -4,17 +4,20 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import Maintenance from "@/components/Maintenance";
+import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }) {
-  const [isMain, setIsMain] = useState(true);
+export default function App({ session, Component, pageProps }) {
+  const [isMain, setIsMain] = useState(false);
 
   return isMain ? (
     <Maintenance />
   ) : (
     <>
-      <Navbar />
-      <Component {...pageProps} />
-      <Footer />
+      <SessionProvider session={session}>
+        <Navbar />
+        <Component {...pageProps} />
+        <Footer />
+      </SessionProvider>
     </>
   );
 }

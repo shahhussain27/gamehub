@@ -2,58 +2,24 @@ export const sidebarLinks = [
   {
     filter: "all",
     label: "All",
+    options: null,
   },
   {
-    filter: "fighting ",
-    label: "Fighting ",
-  },
-  {
-    filter: "rpg",
-    label: "Role-playing",
-  },
-  {
-    filter: "survival",
-    label: "Survival",
-  },
-  {
-    filter: "shooting",
-    label: "Shooting",
-  },
-];
-
-export const sideBarOptions = [
-  {
-    name: "Price",
+    filter: "price",
+    label: "Price",
     options: [
-      {
-        filter: "free",
-        lable: "Free",
-      },
-      {
-        filter: "paid",
-        lable: "Paid",
-      },
+      { value: "free", label: "Free" },
+      { value: "paid", label: "Paid" },
     ],
   },
   {
-    name: "Platform",
+    filter: "platform",
+    label: "Platforms",
     options: [
-      {
-        filter: "android",
-        lable: "Android",
-      },
-      {
-        filter: "ios",
-        lable: "IOS",
-      },
-      {
-        filter: "web",
-        label: "Web",
-      },
-      {
-        filter: "windows",
-        label: "Windows",
-      },
+      { value: "android", label: "Android" },
+      { value: "ios", label: "IOS" },
+      { value: "windows", label: "Windows" },
+      { value: "web", label: "Browser" },
     ],
   },
 ];

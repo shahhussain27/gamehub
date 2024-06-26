@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import googleIcon from "../../public/google.svg";
 import logo from "../../public/gamehub.png";
 import Image from "next/image";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { signIn, useSession } from "next-auth/react";
 
 const signup = () => {
   const [showPass, setShowPass] = useState(false);
   const togglePass = () => setShowPass((prevState) => !prevState);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status]);
+
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -36,7 +47,10 @@ const signup = () => {
           </p>
         </div>
         <div className="mt-8 space-y-6">
-          <button className="w-full flex justify-center rounded-md border border-transparent bg-gray-100 py-2 px-4 text-sm font-medium text-foreground shadow-sm hover:bg-gray-50">
+          <button
+            onClick={() => signIn("google")}
+            className="w-full flex justify-center rounded-md border border-transparent bg-gray-100 py-2 px-4 text-sm font-medium text-foreground shadow-sm hover:bg-gray-50"
+          >
             <Image
               src={googleIcon}
               alt="google"
