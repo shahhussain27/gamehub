@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import heroBg from "../../public/heroBg.jpg"
 
 const Hero = () => {
   const { data: session } = useSession();

@@ -39,16 +39,16 @@ const Navbar = () => {
             <Link href={"/home"}>Games</Link>
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            Community{" "}
+            <Link href={"/community"}>Community</Link>{" "}
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            News{" "}
+            <Link href={"/news"}>News</Link>{" "}
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
             <Link href={"/about"}>About</Link>
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            Contact
+            <Link href={"/contact"}>Contact</Link>
           </li>
         </ul>
         {!session && (
@@ -128,10 +128,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800">
-              Community
+              <Link href={"/community"}>Community</Link>
             </li>
             <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800">
-              News{" "}
+              <Link href={"/news"}>News</Link>{" "}
             </li>
             <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800">
               {" "}
@@ -140,7 +140,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800 mb-3">
-              Contact
+              <Link href={"/contact"}>Contact</Link>
             </li>
             {!session && (
               <button>

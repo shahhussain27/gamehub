@@ -15,15 +15,12 @@ const home = () => {
     }
   }, [status]);
 
- 
   return (
     <div className="flex max-sm:justify-center">
       <SideBar />
 
-      <div className="flex flex-col gap-4 py-4">
-        <div className="flex flex-wrap items-center max-sm:justify-center gap-4">
-          <Main />
-        </div>
+      <div className="flex flex-col gap-4 py-4 w-full">
+        <Main />
       </div>
     </div>
   );

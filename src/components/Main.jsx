@@ -1,103 +1,180 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { IoLogoAndroid, IoLogoApple } from "react-icons/io";
-import { FaWindows } from "react-icons/fa";
+import { IoLogoAndroid, IoLogoApple, IoIosSearch } from "react-icons/io";
+import { FaWindows, FaRegEdit } from "react-icons/fa";
 import { BsBrowserChrome } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
+import { useSession } from "next-auth/react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import Form from "./Form";
+import Loader from "./Loader";
 
 const Main = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredGameId, setHoveredGameId] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [gameData, setGameData] = useState([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    fetch("/api/getGames")
+    fetch("/api/getGame")
       .then((response) => response.json())
       .then((data) => {
         setGameData(data.game);
+        setIsLoaded(false);
       })
       .catch((error) => {
         console.error("Error fetching file:", error);
       });
   }, []);
 
-  // console.log(gameData);
+  const removeGame = async (id) => {
+    try {
+      const response = await fetch("/api/removeGame", {
+        method: "DELETE",
+        body: JSON.stringify(id),
+      });
 
-  return (
+      if (!response.ok) {
+        throw new Error("Failed to delete game");
+      }
+      const newGame = gameData.filter((game) => {
+        return game._id !== id;
+      });
+      setGameData(newGame);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return isLoaded ? (
+    <Loader />
+  ) : (
     <>
-      <div className="flex items-center w-full max-w-md bg-background rounded-lg border border-input shadow-sm mb-4">
+      <div className="flex items-center w-full max-w-md bg-background rounded-full border border-input shadow-sm mb-4">
         <input
           type="search"
           placeholder="Search..."
-          className="flex-1 px-4 py-2 rounded-md bg-transparent outline-none"
+          className="flex-1 px-4 py-2  bg-transparent outline-none"
         />
         <button
           type="submit"
-          className="px-4 py-2 rounded-r-lg bg-black text-white"
+          className="px-4 py-2 rounded-r-full text-2xl bg-black text-white"
         >
-          Search
+          <IoIosSearch />
         </button>
       </div>
-      {gameData.map((game, index) => (
-        <div
-          key={game.id}
-          className="max-w-sm rounded-lg overflow-hidden shadow-lg transition-all"
-        >
-          <div
-            className="relative"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <Image
-              src={game.gamePoster}
-              alt="Game Poster"
-              width={600}
-              height={600}
-              className="w-full h-[400px] object-fit hover:obacity-0"
-            />
+      <div className="flex flex-wrap items-center max-sm:justify-center gap-4">
+        {gameData.map((game, index) => (
+          <Dialog defaultClose key={game._id}>
+            <div className="max-w-sm rounded-lg overflow-hidden shadow-lg transition-all">
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredGameId(game._id)}
+                onMouseLeave={() => setHoveredGameId(null)}
+              >
+                <Image
+                  src={game.posterUrl}
+                  alt="Game Poster"
+                  width={600}
+                  height={600}
+                  className="w-full h-[400px] object-fit hover:obacity-0"
+                />
 
-            <div
-              className={`absolute inset-0 bg-black opacity-0 ${
-                isHovered ? "opacity-50" : ""
-              } transition-opacity duration-300`}
-            />
-            <div
-              className={`absolute flex flex-col justify-around inset-0  bg-background px-6 py-2 ${
-                isHovered ? "opacity-100 " : "opacity-0"
-              }  transition-opacity duration-300`}
-            >
-              <div className="flex flex-col items-center justify-between text-white mb-4">
-                <h2 className="text-xl font-bold">CarrotHunter</h2>
-                <div className="text-2xl font-bold text-primary">
-                  {typeof game.price !== "number" ? "Free" : "₹" + game.price}
-                </div>
-              </div>
-              <div className="grid gap-4 text-white">
-                <div>
-                  <div className="flex gap-2 justify-center text-white">
-                    <span className="bg-black rounded-full p-2">
-                      <FaWindows />
-                    </span>
-                    <span className="bg-black rounded-full p-2">
-                      <IoLogoAndroid />
-                    </span>
-                    <span className="bg-black rounded-full p-2">
-                      <IoLogoApple />
-                    </span>
-                    <span className="bg-black rounded-full p-2">
-                      <BsBrowserChrome />
-                    </span>
+                <div
+                  className={`absolute inset-0 bg-black opacity-0 ${
+                    hoveredGameId === game._id ? "opacity-50" : ""
+                  } transition-opacity duration-300`}
+                />
+                <div
+                  className={`absolute flex flex-col justify-around inset-0  bg-background px-6 py-2 ${
+                    hoveredGameId === game._id ? "opacity-100 " : "opacity-0"
+                  }  transition-opacity duration-300`}
+                >
+                  <div className="flex flex-col items-center justify-between text-white mb-4">
+                    <h2 className="text-xl font-bold">{game.title}</h2>
+                    <div className="text-2xl font-bold text-primary">
+                      {game.price}
+                    </div>
+                  </div>
+                  {session.user?.email === "gamerxpro786@gmail.com" && (
+                    <div className="flex justify-center items-start gap-4">
+                      <DialogTrigger asChild>
+                        <button className="bg-black text-white hover:bg-white hover:text-black rounded-full p-3 text-xl text-center">
+                          <FaRegEdit />
+                        </button>
+                      </DialogTrigger>
+
+                      <button
+                        onClick={() => {
+                          removeGame(game._id);
+                        }}
+                        className="bg-black text-white hover:bg-rose-500 rounded-full p-3 text-xl text-center"
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="grid gap-4 text-white">
+                    <div>
+                      <div className="flex gap-2 justify-center text-white">
+                        {game.platforms.windows && (
+                          <span className="bg-black rounded-full p-2">
+                            <FaWindows />
+                          </span>
+                        )}
+                        {game.platforms.android && (
+                          <span className="bg-black rounded-full p-2">
+                            <IoLogoAndroid />
+                          </span>
+                        )}
+                        {game.platforms.ios && (
+                          <span className="bg-black rounded-full p-2">
+                            <IoLogoApple />
+                          </span>
+                        )}
+                        {game.platforms.browser && (
+                          <span className="bg-black rounded-full p-2">
+                            <BsBrowserChrome />
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <a href={game.gameUrl} download>
+                      <button className="w-full bg-black hover:bg-white text-white hover:text-black py-1.5 rounded-full">
+                        DOWNLOAD ({game.gameSize})
+                      </button>
+                    </a>
                   </div>
                 </div>
-                <a href={game.downloadLink} download>
-                  <button className="w-full bg-black hover:bg-white text-white hover:text-black py-1.5 rounded-full">
-                    DOWNLOAD ({game.gameSize})
-                  </button>
-                </a>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+            <DialogContent className="sm:max-w-[825px] bg-white">
+              <DialogHeader>
+                <DialogTitle>Edit {game.title}</DialogTitle>
+              </DialogHeader>
+              <DialogDescription className="py-4">
+                <Form
+                  gameId={game.gameId}
+                  posterUrl={game.posterUrl}
+                  title={game.title}
+                  price={game.price}
+                  gameUrl={game.gameUrl}
+                  gameSize={game.gameSize}
+                  platforms={game.platforms}
+                />
+              </DialogDescription>
+            </DialogContent>
+          </Dialog>
+        ))}
+      </div>
     </>
   );
 };

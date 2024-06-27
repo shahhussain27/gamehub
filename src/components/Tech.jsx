@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import tech from "../../public/tech.webp";
+import unlesh from "../../public/unlesh.jpg";
 
 const Tech = () => {
   return (
@@ -23,11 +24,11 @@ const Tech = () => {
               </div>
             </div>
             <Image
-              src={tech}
+              src={unlesh}
               width={550}
               height={550}
               alt="Hero"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-bottom sm:w-full lg:order-last lg:aspect-square"
+              className="mx-auto overflow-hidden rounded-xl object-bottom sm:w-full lg:order-last lg:aspect-square"
             />
           </div>
         </div>
