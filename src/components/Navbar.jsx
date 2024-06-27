@@ -103,7 +103,7 @@ const Navbar = () => {
         className="custom-drawer"
       >
         <div className="flex flex-col gap-6 bg-black text-white h-screen p-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between px-3">
             <Link href={"/"} onClick={toggleDrawer}>
               <Image
                 src={logo}
