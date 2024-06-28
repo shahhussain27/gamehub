@@ -9,9 +9,31 @@ import { signIn, useSession } from "next-auth/react";
 
 const signup = () => {
   const [showPass, setShowPass] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const togglePass = () => setShowPass((prevState) => !prevState);
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    if (res.ok) {
+      router.push("/");
+    } else {
+      const data = await res.json();
+      alert(data.message);
+    }
+  };
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -69,6 +91,8 @@ const signup = () => {
                 placeholder="name"
                 required
                 className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
@@ -79,6 +103,8 @@ const signup = () => {
                 placeholder="name@example.com"
                 required
                 className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="relative space-y-2">
@@ -91,6 +117,8 @@ const signup = () => {
                 placeholder="Password"
                 required
                 className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 variant="ghost"
@@ -119,7 +147,10 @@ const signup = () => {
               </Link>
               .
             </div>
-            <button className="w-full bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-full">
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-full"
+            >
               Sign Up
             </button>
             <Link

@@ -9,16 +9,26 @@ import { signIn, useSession } from "next-auth/react";
 
 const login = () => {
   const [showPass, setShowPass] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const togglePass = () => setShowPass((prevState) => !prevState);
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    signIn("credentials", {
+      email,
+      password,
+    });
+  };
 
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/");
     }
   }, [status]);
-  
+
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -69,6 +79,8 @@ const login = () => {
                 placeholder="name@example.com"
                 required
                 className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="relative space-y-2">
@@ -84,6 +96,8 @@ const login = () => {
                 placeholder="Password"
                 required
                 className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 variant="ghost"
@@ -103,7 +117,10 @@ const login = () => {
               </label>
             </div>
 
-            <button className="w-full bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-full">
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-full"
+            >
               Login in
             </button>
 

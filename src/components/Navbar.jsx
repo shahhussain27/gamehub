@@ -22,6 +22,8 @@ const Navbar = () => {
     setIsOpen((prevState) => !prevState);
   };
 
+  console.log(session)
+
   return (
     <>
       <nav className="sticky top-0 z-50 flex justify-between items-center w-full bg-black text-gray-200 h-[40px] px-36 max-sm:px-4">

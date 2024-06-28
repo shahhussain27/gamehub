@@ -5,9 +5,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       await connectToDB();
-      const game = await Game.find();
+      const game = await Game.find().sort({ createdAt: -1 });
 
-      res.status(200).json({game: game});
+      res.status(200).json({ game: game });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Error reading file" });

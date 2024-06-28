@@ -82,6 +82,7 @@ const Main = () => {
                 <Image
                   src={game.posterUrl}
                   alt="Game Poster"
+                  loading="lazy"
                   width={600}
                   height={600}
                   className="w-full h-[400px] object-fit hover:obacity-0"
