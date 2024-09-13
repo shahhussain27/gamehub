@@ -37,9 +37,9 @@ const login = () => {
             <Image
               src={logo}
               alt="gamehub"
-              width={100}
-              height={100}
-              className="h-12 w-12 text-primary"
+              width={80}
+              height={80}
+              className="invert"
             />
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">

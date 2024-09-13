@@ -25,11 +25,11 @@ const SideBar = () => {
             <Image
               src={logo}
               alt="gamehub"
-              height={100}
-              width={100}
-              className="w-10 h-10"
+              height={50}
+              width={50}
+              className="invert"
             />
-            <span className="text-lg">GameHub</span>
+            <span className="text-lg">STORE</span>
           </Link>
         </div>
 
