@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["raw.githubusercontent.com"],
+    domains: ["gamehub-publisher.s3.ap-south-1.amazonaws.com"],
   },
 };
 

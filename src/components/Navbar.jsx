@@ -22,35 +22,30 @@ const Navbar = () => {
     setIsOpen((prevState) => !prevState);
   };
 
-  console.log(session)
 
   return (
     <>
-      <nav className="sticky top-0 z-50 flex justify-between items-center w-full bg-black text-gray-200 h-[40px] px-36 max-sm:px-4">
-        <ul className="flex items-center  gap-6 text-xs ">
+      <nav className="sticky top-0 z-50 flex justify-between items-center w-full bg-gradient-to-r from-[#020D1A]  to-[#05162a] text-gray-200 h-[40px] px-36 py-8 max-sm:px-4 mb-6">
+        <ul className="flex items-center  gap-6 text-sm text-semibold ">
           <Link href={"/"}>
             <Image
               src={logo}
               alt="game-hub"
-              width={30}
-              height={30}
+              width={50}
+              height={50}
               className=""
             />
           </Link>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"/home"}>Games</Link>
+            <Link href={"/home"} className="font-bold text-2xl">
+              STORE
+            </Link>
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
             <Link href={"/community"}>Community</Link>{" "}
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"/news"}>News</Link>{" "}
-          </li>
-          <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"/about"}>About</Link>
-          </li>
-          <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"/contact"}>Contact</Link>
+            <Link href={"https://devgamehub.vercel.app/"} target="_blank">Publisher</Link>{" "}
           </li>
         </ul>
         {!session && (

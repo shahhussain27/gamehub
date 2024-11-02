@@ -43,7 +43,7 @@ const signup = () => {
 
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-md space-y-8 text-white">
         <div>
           <div className="flex justify-center">
             <Image
@@ -51,7 +51,7 @@ const signup = () => {
               alt="gamehub"
               width={80}
               height={80}
-              className="text-primary invert"
+              className="text-primary "
             />
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
@@ -71,7 +71,7 @@ const signup = () => {
         <div className="mt-8 space-y-6">
           <button
             onClick={() => signIn("google")}
-            className="w-full flex justify-center rounded-md border border-transparent bg-gray-100 py-2 px-4 text-sm font-medium text-foreground shadow-sm hover:bg-gray-50"
+            className="w-full flex justify-center rounded-md border border-transparent text-black bg-gray-100 py-2 px-4 text-sm font-medium text-foreground shadow-sm hover:bg-gray-50"
           >
             <Image
               src={googleIcon}
@@ -90,7 +90,7 @@ const signup = () => {
                 type="text"
                 placeholder="name"
                 required
-                className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                className="text-black border border-gray-300 rounded-md w-full py-1.5 px-2"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -102,7 +102,7 @@ const signup = () => {
                 type="email"
                 placeholder="name@example.com"
                 required
-                className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                className="text-black border border-gray-300 rounded-md w-full py-1.5 px-2"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -116,7 +116,7 @@ const signup = () => {
                 type={`${showPass ? "text" : "password"}`}
                 placeholder="Password"
                 required
-                className="border border-gray-300 rounded-md w-full py-1.5 px-2"
+                className="text-black border border-gray-300 rounded-md w-full py-1.5 px-2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

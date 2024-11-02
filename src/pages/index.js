@@ -1,12 +1,12 @@
-import Hero from "@/components/Hero";
-import Tech from "@/components/Tech";
+import Main from "@/components/Main";
 
 export default function Home() {
   return (
     <main>
       {/* <Navbar /> */}
-      <Hero />
-      <Tech />
+      <div className="flex flex-col items-center justify-start h-screen ">
+        <Main />
+      </div>
       {/* <Footer /> */}
     </main>
   );

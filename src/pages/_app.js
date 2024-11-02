@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 import Maintenance from "@/components/Maintenance";
 import { SessionProvider } from "next-auth/react";
+import Loader from "@/components/Loader";
 
 export default function App({ session, Component, pageProps }) {
   const [isMain, setIsMain] = useState(false);
@@ -19,10 +20,16 @@ export default function App({ session, Component, pageProps }) {
   ) : (
     <>
       <SessionProvider session={session}>
-        {loading ? "loading..." : <> <Navbar />
-          <Component {...pageProps} />
-          <Footer /></>}
-
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {" "}
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </>
+        )}
       </SessionProvider>
     </>
   );
