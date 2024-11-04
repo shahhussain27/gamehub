@@ -14,7 +14,7 @@ function Error({ statusCode }) {
                 alt="404"
                 height={500}
                 width={500}
-                className="object-cover"
+                className="object-cover mix-blend-lighten"
               />
             ) : (
               <>

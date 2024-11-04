@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";;
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import Loader from "./Loader";
 import SearchNotFound from "../../public/search-not-found.png";
+import Link from "next/link";
 
 const Main = () => {
   const [isLoaded, setIsLoaded] = useState(true);
@@ -36,6 +37,7 @@ const Main = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
+
       <div className="flex flex-wrap items-center justify-center overflow-y-scroll">
         {gameData.filter((game) =>
           game.productName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -64,7 +66,8 @@ const Main = () => {
             game.productName.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .map((game, index) => (
-            <div
+            <Link
+              href={`/game/${game._id}`}
               key={game._id}
               className="max-w-sm  rounded-lg overflow-hidden shadow-x-lg transition-all scale-90 "
             >
@@ -92,7 +95,9 @@ const Main = () => {
                 </div>
               </div>
               <div className="mt-4 mx-1">
-                <h5 className="text-sm text-gray-400">{game.productPlatform}</h5>
+                <h5 className="text-sm text-gray-400">
+                  {game.productPlatform}
+                </h5>
                 <h3 className="font-semibold text-lg text-white">
                   {game.productName}
                 </h3>
@@ -100,7 +105,7 @@ const Main = () => {
                   {game.productPrice > 0 ? `₹${game.productPrice}` : "Free"}
                 </h2>
               </div>
-            </div>
+            </Link>
           ))}
       </div>
     </>

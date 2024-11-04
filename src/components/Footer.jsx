@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import logo from "../../public/gamehub.png";
 import Image from "next/image";
+import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -30,7 +31,11 @@ const Footer = () => {
               <Link href={"/"} className="hover:text-gray-300" prefetch={false}>
                 Home
               </Link>
-              <Link href={"/home"} className="hover:text-gray-300" prefetch={false}>
+              <Link
+                href={"/home"}
+                className="hover:text-gray-300"
+                prefetch={false}
+              >
                 Games
               </Link>
               <Link href="#" className="hover:text-gray-300" prefetch={false}>
@@ -68,7 +73,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <GithubIcon className="w-6 h-6" />
+              <FaGithub className="w-6 h-6" />
             </Link>
             <Link
               href="https://linkedin.com/in/mirza-shah-hussain-a18269247"
@@ -76,7 +81,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkedinIcon className="w-6 h-6" />
+              <FaLinkedin className="w-6 h-6" />
             </Link>
             <Link
               href="https://www.instagram.com/shah_hussain27/"
@@ -84,10 +89,15 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <InstagramIcon className="w-6 h-6" />
+              <FaInstagram className="w-6 h-6" />
             </Link>
-            <Link href="#" className="hover:text-gray-300" prefetch={false}>
-              <YoutubeIcon className="w-6 h-6" />
+            <Link
+              href="https://api.whatsapp.com/send/?phone=7827917162&"
+              target="_blank"
+              className="hover:text-gray-300"
+              prefetch={false}
+            >
+              <FaWhatsapp className="w-6 h-6" />
             </Link>
           </div>
         </div>
@@ -96,7 +106,7 @@ const Footer = () => {
           <div className="grid gap-1 text-sm">
             <div>
               <MailIcon className="w-4 h-4 inline-block mr-2" />
-              <span>mirza_shah@ndiit.org</span>
+              <span>mirzashahhussain63@ndiit.org</span>
               {/* <span>support@gamehub.com</span> */}
             </div>
             <div>
@@ -105,7 +115,7 @@ const Footer = () => {
             </div>
             <div>
               <MapPinIcon className="w-4 h-4 inline-block mr-2" />
-              <span>Laxmi Nagar, Delhi India</span>
+              <span>New Delhi, India</span>
             </div>
           </div>
         </div>
