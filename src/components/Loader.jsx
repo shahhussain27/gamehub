@@ -13,7 +13,7 @@ const Loader = () => {
         className="mix-blend-lighten"
       />
       <h1 className="text-2xl font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-700">
-        beta 1.3.0
+        beta {process.env.NEXT_PUBLIC_APP_VERSION}
       </h1>
     </div>
   );

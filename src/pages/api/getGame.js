@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       res.status(200).json({ game: product });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Error reading file" });
+      res.status(500).json({ error: "Internal Server Error" });
     }
   } else {
     res.status(500).json({ error: "Method Not Allowed" });

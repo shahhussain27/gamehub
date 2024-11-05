@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { connectToDB } from "../../../lib/mongodb/mongoose";
 import Product from "../../../lib/models/Product";
 import Error from "next/error";
+import AboutTheGame from "@/components/AboutTheGame";
+import Ratings from "@/components/Ratings";
 
 export default function Page({ game, error }) {
   const router = useRouter();
@@ -14,6 +16,9 @@ export default function Page({ game, error }) {
   return (
     <div>
       <Game game={game} />
+      <AboutTheGame game={game} />
+      <Ratings />
+
     </div>
   );
 }

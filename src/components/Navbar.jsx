@@ -22,7 +22,6 @@ const Navbar = () => {
     setIsOpen((prevState) => !prevState);
   };
 
-
   return (
     <>
       <nav className="sticky top-0 z-50 flex justify-between items-center w-full bg-gradient-to-r from-[#020D1A]  to-[#05162a] text-gray-200 h-[40px] px-36 py-8 max-sm:px-4 mb-6">
@@ -45,7 +44,9 @@ const Navbar = () => {
             <Link href={"/community"}>Community</Link>{" "}
           </li>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"https://devgamehub.vercel.app/"} target="_blank">Publisher</Link>{" "}
+            <Link href={"https://devgamehub.vercel.app/"} target="_blank">
+              Publisher
+            </Link>{" "}
           </li>
         </ul>
         {!session && (
@@ -63,10 +64,10 @@ const Navbar = () => {
           <Dropdown>
             <DropdownTrigger>
               <div className="flex items-center gap-2 max-sm:hidden">
-                <button className="text-lg">
+                <button className="text-xl">
                   <FaRegUserCircle />
                 </button>
-                <h2 className="text-xs">{session.user?.name}</h2>
+                <h2 className="">{session.user?.name}</h2>
               </div>
             </DropdownTrigger>
             <DropdownMenu
@@ -89,7 +90,7 @@ const Navbar = () => {
           </Dropdown>
         )}
 
-        <button onClick={toggleDrawer} className="hidden max-sm:block  text-xl">
+        <button onClick={toggleDrawer} className="hidden max-sm:block text-2xl">
           <HiBars4 />
         </button>
       </nav>
@@ -128,17 +129,11 @@ const Navbar = () => {
               <Link href={"/community"}>Community</Link>
             </li>
             <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800">
-              <Link href={"/news"}>News</Link>{" "}
-            </li>
-            <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800">
-              {" "}
-              <Link href={"/about"} onClick={toggleDrawer}>
-                About
+              <Link href={"https://devgamehub.vercel.app/"} target="_blank">
+                Publisher
               </Link>
             </li>
-            <li className="w-full cursor-pointer hover:text-white border-b py-3 border-slate-800 mb-3">
-              <Link href={"/contact"}>Contact</Link>
-            </li>
+
             {!session && (
               <button>
                 <Link
@@ -154,7 +149,7 @@ const Navbar = () => {
             {session && (
               <Dropdown>
                 <DropdownTrigger>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 my-4">
                     <button className=" text-white text-xl">
                       <FaRegUserCircle />
                     </button>

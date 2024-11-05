@@ -1,13 +1,42 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { FaWindows, FaAndroid } from "react-icons/fa";
+import { CiGrid41 } from "react-icons/ci";
 import StarRatings from "react-star-ratings";
 
 const Game = ({ game }) => {
+  const { data: session, status } = useSession();
   const [rating, setRating] = useState(2.4);
+  const router = useRouter();
 
-  const changeRating = (newRating, name) => {
-    setRating(newRating);
+
+
+  const buyGame = async (id, userEmail) => {
+    try {
+      const response = await fetch("/api/buyGame", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, userEmail }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const json = response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onDownload = (id) => {
+    if (status !== "authenticated") {
+      router.push("/login");
+    }
+
+    buyGame(id, session.user?.email);
   };
 
   return (
@@ -30,7 +59,7 @@ const Game = ({ game }) => {
           <h2 className="">{rating}</h2>
         </div>
       </div>
-      <div className="flex flex-row-reverse max-sm:flex-col items-start gap-16 px-32 max-sm:px-0">
+      <section className="flex flex-row-reverse max-sm:flex-col items-start gap-16 px-32 max-sm:px-0">
         <div className="flex flex-col justify-center gap-4 w-2/4 max-sm:w-full">
           <div className="flex justify-center items-center w-full h-[250px] rounded-xl">
             {game.productImage && (
@@ -53,17 +82,35 @@ const Game = ({ game }) => {
           <h2 className="font-bold text-lg">
             {game.productPrice > 0 ? `₹${game.productPrice}` : "Free"}
           </h2>
-          <a
-            className="font-medium text-center text-black bg-white  py-3 rounded-lg hover:opacity-95 cursor-pointer"
-            href={game.productFileURL}
-            download
-          >
-            <button className="">
-              {game.productPrice > 0 ? "Buy Now" : "Download"}
-            </button>
-          </a>
 
-          <button className="font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600">
+          {game.productFileURL && (
+            <button
+              className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-semibold text-center text-black bg-white  py-3 rounded-lg hover:opacity-95 cursor-pointer"
+              disabled={game.productDownloads.includes(session.user?.email)}
+              onClick={() => onDownload(game._id)}
+            >
+              {game.productDownloads.includes(session.user?.email) ? (
+                <>
+                  <CiGrid41 className="text-lg" /> In Libaray
+                </>
+              ) : (
+                `${game.productPrice > 0 ? "Buy Now" : "Get"}`
+              )}
+            </button>
+          )}
+          {!game.productFileURL && (
+            <button className="font-medium text-center text-slate-500 border border-slate-600  py-3 rounded-lg hover:opacity-95 cursor-not-allowed">
+              Coming Soon
+            </button>
+          )}
+
+          <button
+            className={`${
+              game.productFileUrl
+                ? "font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
+                : "hidden"
+            }`}
+          >
             Add To Cart
           </button>
           <button className="font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600">
@@ -102,7 +149,6 @@ const Game = ({ game }) => {
                 </td>
               </tr>
             </table>
-           
           </div>
         </div>
         <div className="flex flex-col gap-4 w-full">
@@ -127,7 +173,7 @@ const Game = ({ game }) => {
             {game.productTitle || "No Title to display"}
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

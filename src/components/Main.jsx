@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import Loader from "./Loader";
 import SearchNotFound from "../../public/search-not-found.png";
-import Link from "next/link";
+import Card from "./gameCards/Card";
+import FreeGames from "./filters/FreeGames";
 
 const Main = () => {
   const [isLoaded, setIsLoaded] = useState(true);
@@ -66,48 +66,17 @@ const Main = () => {
             game.productName.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .map((game, index) => (
-            <Link
-              href={`/game/${game._id}`}
-              key={game._id}
-              className="max-w-sm  rounded-lg overflow-hidden shadow-x-lg transition-all scale-90 "
-            >
-              <div className="relative w-[282px] h-[400px] hover:opacity-80 transition-opacity duration-300 cursor-pointer group">
-                {game.productFrontPoster && (
-                  <Image
-                    src={game.productFrontPoster}
-                    alt="Game Poster"
-                    loading="lazy"
-                    height={400}
-                    width={282}
-                    className="w-full h-[400px]  object-cover rounded-lg"
-                  />
-                )}
-
-                {!game.productFrontPoster && (
-                  <div className="flex justify-center items-center w-full h-[400px] text-white text-3xl font-bold bg-slate-800">
-                    Not available
-                  </div>
-                )}
-
-                <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 absolute inset-0 w-8 h-8 ml-auto m-2 p-1 text-white bg-black text-2xl border-2 border-white rounded-full cursor-pointer">
-                  <IoHeartOutline />
-                  {/* <IoHeartSharp  />  fill */}
-                </div>
-              </div>
-              <div className="mt-4 mx-1">
-                <h5 className="text-sm text-gray-400">
-                  {game.productPlatform}
-                </h5>
-                <h3 className="font-semibold text-lg text-white">
-                  {game.productName}
-                </h3>
-                <h2 className="text-white">
-                  {game.productPrice > 0 ? `₹${game.productPrice}` : "Free"}
-                </h2>
-              </div>
-            </Link>
+            <Card
+              id={game._id}
+              productFrontPoster={game.productFrontPoster}
+              productPlatform={game.productPlatform}
+              productName={game.productName}
+              productPrice={game.productPrice}
+            />
           ))}
+          <FreeGames />
       </div>
+      
     </>
   );
 };
