@@ -1,41 +1,40 @@
 import Link from "next/link";
-import Img404 from "../../public/404.png";
+import Img404 from "../../public/404.jpg";
 import Image from "next/image";
 
 function Error({ statusCode }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[100dvh] bg-background text-card-foreground">
+    <div className="flex flex-col items-center justify-center min-h-[80dvh] bg-background ">
       <div className="text-center space-y-4">
         {statusCode ? (
           <>
             {statusCode === 404 ? (
-              <Image
-                src={Img404}
-                alt="404"
-                height={500}
-                width={500}
-                className="object-cover mix-blend-lighten"
-              />
+              <div className="flex flex-col justify-center items-center gap-4 mb-4">
+                <Image
+                  src={Img404}
+                  alt="404"
+                  height={150}
+                  width={150}
+                  className="invert mix-blend-lighten"
+                />
+                <h2 className="font-extrabold text-4xl">404  - Page Not Found</h2>
+              </div>
             ) : (
               <>
-                <h1 className="text-9xl font-bold">{statusCode}</h1>
-                <p className="text-xl text-muted-foreground">
+                <h1 className="font-extrabold text-4xl">{statusCode}</h1>
+                <p className="text-xl">
                   Oops! The page you're looking for could not be found.
                 </p>
               </>
             )}
           </>
         ) : (
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl">
             An error occurred on client
           </p>
         )}
 
-        <Link
-          href={"/"}
-          className="inline-flex bg-gradient-to-r from-purple-900 to-slate-900 text-white h-10 items-center justify-center rounded-md px-6 text-sm font-medium "
-          prefetch={false}
-        >
+        <Link href={"/"} className="btn-primary  py-2.5 px-3" prefetch={false}>
           Go back home
         </Link>
       </div>

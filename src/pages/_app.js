@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import Maintenance from "@/components/Maintenance";
 import { SessionProvider } from "next-auth/react";
 import Loader from "@/components/Loader";
+import { store} from "@/redux/store";
+import { Provider } from "react-redux";
 
 export default function App({ session, Component, pageProps }) {
   const [isMain, setIsMain] = useState(false);
@@ -24,10 +26,12 @@ export default function App({ session, Component, pageProps }) {
           <Loader />
         ) : (
           <>
-            {" "}
-            <Navbar />
-            <Component {...pageProps} />
-            <Footer />
+            <Provider store={store}>
+              <Navbar />
+              <Component {...pageProps} />
+              <Footer />
+            </Provider>
+            ,
           </>
         )}
       </SessionProvider>

@@ -36,7 +36,7 @@ const Navbar = () => {
             />
           </Link>
           <li className="cursor-pointer hover:text-white max-sm:hidden">
-            <Link href={"/home"} className="font-bold text-2xl">
+            <Link href={"/"} className="font-bold text-2xl">
               STORE
             </Link>
           </li>
@@ -68,23 +68,43 @@ const Navbar = () => {
                   <FaRegUserCircle />
                 </button>
                 <h2 className="">{session.user?.name}</h2>
+                <button
+                  className="disabled:opacity-80 disabled:cursor-not-allowed btn-primary py-1.5 px-3 text-2xl ml-4"
+                  disabled={true}
+                >
+                  Coming Soon
+                </button>
               </div>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Static Actions"
-              className="bg-black rounded-md w-full py-1 px-2 text-white"
+              className="bg-gradient-to-r from-slate-800 to-gray-800 rounded-lg py-2 px-2 text-white shadow-lg"
             >
-              <DropdownItem key="email" className="text-gray-300">
-                {session.user?.email}
+              <DropdownItem
+                key="cart"
+                className="rounded-lg pr-32 hover:bg-slate-600"
+              >
+                Account
               </DropdownItem>
-              <DropdownItem key="logout" className="text-danger">
-                <button
-                  onClick={() => signOut({ callbackUrl: "/login" })}
-                  className=" inline-flex  w-full h-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 px-5 text-xs font-medium text-black shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  prefetch={false}
-                >
-                  Logout
-                </button>
+              <DropdownItem
+                key="wishlist"
+                className="rounded-lg pr-32 hover:bg-slate-600"
+              >
+                <Link href={"/wishlist"}>Wishlist</Link>
+              </DropdownItem>
+              <DropdownItem
+                key="account"
+                className="rounded-lg pr-32 hover:bg-slate-600"
+              >
+                Cart
+              </DropdownItem>
+              <DropdownItem
+                key="logout"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="rounded-lg pr-32 hover:bg-slate-600 "
+                prefetch={false}
+              >
+                Sign Out
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

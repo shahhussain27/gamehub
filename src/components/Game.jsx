@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import { addToWishlist, removeToWishlist } from "@/redux/slices/wishlist";
 import { FaWindows, FaAndroid } from "react-icons/fa";
 import { CiGrid41 } from "react-icons/ci";
 import StarRatings from "react-star-ratings";
@@ -10,8 +12,10 @@ const Game = ({ game }) => {
   const { data: session, status } = useSession();
   const [rating, setRating] = useState(2.4);
   const router = useRouter();
+  const wishlist = useSelector((state) => state.wishlist);
+  const dispatch = useDispatch();
 
-
+  const isInWishlist = wishlist.some((item) => item.id === game._id);
 
   const buyGame = async (id, userEmail) => {
     try {
@@ -39,6 +43,22 @@ const Game = ({ game }) => {
     buyGame(id, session.user?.email);
   };
 
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      dispatch(removeToWishlist(game._id));
+    } else {
+      dispatch(
+        addToWishlist({
+          id: game._id,
+          productImage: game.productFrontPoster,
+          productName: game.productName,
+          productPrice: game.productPrice,
+          productPlatform: game.productPlatform,
+        })
+      );
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col max-sm:justify-center max-sm:items-center px-32 my-8 max-sm:px-0">
@@ -52,7 +72,6 @@ const Game = ({ game }) => {
             starEmptyColor="#64748b"
             starDimension="20px"
             starSpacing="2px"
-            //   changeRating={changeRating}
             numberOfStars={5}
             name="rating"
           />
@@ -104,18 +123,28 @@ const Game = ({ game }) => {
             </button>
           )}
 
-          <button
-            className={`${
-              game.productFileUrl
-                ? "font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
-                : "hidden"
-            }`}
-          >
-            Add To Cart
-          </button>
-          <button className="font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600">
-            Add to Wishlist
-          </button>
+          {game.productDownloads.includes(session.user?.email) ? (
+            ""
+          ) : (
+            <>
+              {" "}
+              <button
+                className={`${
+                  game.productFileURL
+                    ? "font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
+                    : "hidden"
+                }`}
+              >
+                Add To Cart
+              </button>
+              <button
+                onClick={handleWishlistToggle}
+                className="font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
+              >
+                {isInWishlist ? "In Wishlist" : "Add to Wishlist"}
+              </button>
+            </>
+          )}
 
           <div className=" w-full h-1/4 ">
             <table className="w-full">

@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { addToWishlist, removeToWishlist } from "@/redux/slices/wishlist";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-
 
 const Card = ({
   id,
@@ -11,6 +12,26 @@ const Card = ({
   productName,
   productPrice,
 }) => {
+  const wishlist = useSelector((state) => state.wishlist);
+  const dispatch = useDispatch();
+
+  const isInWishlist = wishlist.some((item) => item.id === id);
+
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      dispatch(removeToWishlist(id));
+    } else {
+      dispatch(
+        addToWishlist({
+          id: id,
+          productImage: productFrontPoster,
+          productName: productName,
+          productPrice: productPrice,
+          productPlatform: productPlatform,
+        })
+      );
+    }
+  };
   return (
     <>
       <Link
@@ -36,10 +57,12 @@ const Card = ({
             </div>
           )}
 
-          <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 absolute inset-0 w-8 h-8 ml-auto m-2 p-1 text-white bg-black text-2xl border-2 border-white rounded-full cursor-pointer">
-            <IoHeartOutline />
-            {/* <IoHeartSharp  />  fill */}
-          </div>
+          <button
+            onClick={handleWishlistToggle}
+            className="flex justify-center items-center opacity-0 group-hover:opacity-100 absolute inset-0 w-8 h-8 ml-auto m-2 p-1 text-white bg-black text-2xl border-2 border-white rounded-full cursor-pointer"
+          >
+            {isInWishlist ? <IoHeartSharp /> : <IoHeartOutline />}
+          </button>
         </div>
         <div className="mt-4 mx-1">
           <h5 className="text-sm text-gray-400">{productPlatform}</h5>
