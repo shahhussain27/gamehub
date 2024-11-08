@@ -17,6 +17,7 @@ const Main = () => {
   const { data: session } = useSession();
 
   const wishlist = useSelector((state) => state.wishlist);
+  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     fetch("/api/getGame")
@@ -58,10 +59,19 @@ const Main = () => {
               )}
             </button>
           </Link>
-          <button className="flex items-center gap-2 hover:text-white">
-            <MdShoppingCart />
-            <h5>Cart</h5>
-          </button>
+          <Link href={"/cart"}>
+            <button className="flex items-center gap-2 hover:text-white">
+              <MdShoppingCart />
+              <h5>Cart</h5>
+              {cart.length <= 0 ? (
+                ""
+              ) : (
+                <span className="text-sm font-semibold text-black bg-blue-400 py-0 px-3 rounded-full">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+          </Link>
         </div>
       </div>
 

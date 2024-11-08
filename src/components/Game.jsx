@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { addToWishlist, removeToWishlist } from "@/redux/slices/wishlist";
+import { addToCart } from "@/redux/slices/cart";
 import { FaWindows, FaAndroid } from "react-icons/fa";
 import { CiGrid41 } from "react-icons/ci";
 import StarRatings from "react-star-ratings";
+import ColorThief from "colorthief";
+import { getBrightness, getVibrantColor } from "@/lib/colorExtraction";
 
 const Game = ({ game }) => {
   const { data: session, status } = useSession();
   const [rating, setRating] = useState(2.4);
+  const [buttonColor, setButtonColor] = useState("#fff1f2");
+  const [textColor, setTextColor] = useState("#000000");
+  const imageRef = useRef(null);
   const router = useRouter();
   const wishlist = useSelector((state) => state.wishlist);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const isInWishlist = wishlist.some((item) => item.id === game._id);
+  const isInCart = cart.some((item) => item.id === game._id);
 
   const buyGame = async (id, userEmail) => {
     try {
@@ -59,6 +67,44 @@ const Game = ({ game }) => {
     }
   };
 
+  const handleCartToggle = () => {
+    if (isInCart) {
+      router.push("/cart");
+    } else {
+      dispatch(
+        addToCart({
+          id: game._id,
+          productImage: game.productFrontPoster,
+          productName: game.productName,
+          productPrice: game.productPrice,
+          productPlatform: game.productPlatform,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    const image = imageRef.current;
+    const colorThief = new ColorThief();
+
+    if (image) {
+      image.onload = () => {
+        const palette = colorThief.getPalette(image, 5);
+        const vibrantColor = getVibrantColor(palette);
+        setButtonColor(`rgb(${vibrantColor.join(",")})`);
+
+        const [r, g, b] = vibrantColor;
+        const brightness = getBrightness(r, g, b);
+
+        if (brightness < 128) {
+          setTextColor("#ffffff");
+        } else {
+          setTextColor("#000000");
+        }
+      };
+    }
+  }, [game.productImage]);
+
   return (
     <>
       <div className="flex flex-col max-sm:justify-center max-sm:items-center px-32 my-8 max-sm:px-0">
@@ -83,6 +129,7 @@ const Game = ({ game }) => {
           <div className="flex justify-center items-center w-full h-[250px] rounded-xl">
             {game.productImage && (
               <Image
+                ref={imageRef}
                 src={game.productImage}
                 alt="Image"
                 height={100}
@@ -104,9 +151,10 @@ const Game = ({ game }) => {
 
           {game.productFileURL && (
             <button
-              className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-semibold text-center text-black bg-white  py-3 rounded-lg hover:opacity-95 cursor-pointer"
+              className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-semibold text-center  py-3 rounded-lg hover:opacity-90 cursor-pointer"
               disabled={game.productDownloads.includes(session.user?.email)}
               onClick={() => onDownload(game._id)}
+              style={{ backgroundColor: buttonColor, color: textColor }}
             >
               {game.productDownloads.includes(session.user?.email) ? (
                 <>
@@ -129,13 +177,14 @@ const Game = ({ game }) => {
             <>
               {" "}
               <button
+                onClick={handleCartToggle}
                 className={`${
                   game.productFileURL
                     ? "font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
                     : "hidden"
                 }`}
               >
-                Add To Cart
+                {isInCart ? "View In Cart" : "Add To Cart "}
               </button>
               <button
                 onClick={handleWishlistToggle}

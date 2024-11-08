@@ -14,10 +14,15 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/dropdown";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { data: session } = useSession();
+
+  const wishlist = useSelector((state) => state.wishlist);
+  const cart = useSelector((state) => state.cart);
+
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -60,6 +65,7 @@ const Navbar = () => {
             </Link>
           </button>
         )}
+        {/* desktop view */}
         {session && (
           <Dropdown>
             <DropdownTrigger>
@@ -78,7 +84,7 @@ const Navbar = () => {
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Static Actions"
-              className="bg-gradient-to-r from-slate-800 to-gray-800 rounded-lg py-2 px-2 text-white shadow-lg"
+              className="bg-gradient-to-r from-slate-800/80 to-gray-800/95 backdrop-blur rounded-lg py-2 px-2 text-white shadow-lg"
             >
               <DropdownItem
                 key="cart"
@@ -90,13 +96,31 @@ const Navbar = () => {
                 key="wishlist"
                 className="rounded-lg pr-32 hover:bg-slate-600"
               >
-                <Link href={"/wishlist"}>Wishlist</Link>
+                <Link href={"/wishlist"}>
+                  Wishlist
+                  {wishlist.length <= 0 ? (
+                    ""
+                  ) : (
+                    <span className="text-xs font-semibold text-black bg-blue-400 py-0 px-3 mx-2 rounded-full">
+                      {wishlist.length}
+                    </span>
+                  )}
+                </Link>
               </DropdownItem>
               <DropdownItem
                 key="account"
                 className="rounded-lg pr-32 hover:bg-slate-600"
               >
-                Cart
+                <Link href={"/cart"}>
+                  Cart
+                  {cart.length <= 0 ? (
+                    ""
+                  ) : (
+                    <span className="text-xs font-semibold text-black bg-blue-400 py-0 px-3 mx-2 rounded-full">
+                      {cart.length}
+                    </span>
+                  )}
+                </Link>
               </DropdownItem>
               <DropdownItem
                 key="logout"
@@ -114,6 +138,7 @@ const Navbar = () => {
           <HiBars4 />
         </button>
       </nav>
+      {/* mobile view */}
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
