@@ -101,7 +101,7 @@ const Navbar = () => {
                   {wishlist.length <= 0 ? (
                     ""
                   ) : (
-                    <span className="text-xs font-semibold text-black bg-blue-400 py-0 px-3 mx-2 rounded-full">
+                    <span className="text-xs font-semibold text-black bg-slate-200 py-0 px-3 mx-2 rounded-full">
                       {wishlist.length}
                     </span>
                   )}
@@ -116,7 +116,7 @@ const Navbar = () => {
                   {cart.length <= 0 ? (
                     ""
                   ) : (
-                    <span className="text-xs font-semibold text-black bg-blue-400 py-0 px-3 mx-2 rounded-full">
+                    <span className="text-xs font-semibold text-black bg-slate-200 py-0 px-3 mx-2 rounded-full">
                       {cart.length}
                     </span>
                   )}

@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className=" text-white py-8 sm:py-12">
+    <footer className=" text-white  py-8 sm:py-12 ">
       <div className=" mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-6" prefetch={false}>

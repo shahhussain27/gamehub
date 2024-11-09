@@ -132,8 +132,8 @@ const Game = ({ game }) => {
                 ref={imageRef}
                 src={game.productImage}
                 alt="Image"
-                height={100}
-                width={100}
+                height={250}
+                width={250}
                 loading="lazy"
                 className="w-[250px] h-[250px] rounded-lg object-fit"
               />
@@ -151,7 +151,7 @@ const Game = ({ game }) => {
 
           {game.productFileURL && (
             <button
-              className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-semibold text-center  py-3 rounded-lg hover:opacity-90 cursor-pointer"
+              className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-medium text-center  py-3 rounded-lg hover:opacity-90 cursor-pointer"
               disabled={game.productDownloads.includes(session.user?.email)}
               onClick={() => onDownload(game._id)}
               style={{ backgroundColor: buttonColor, color: textColor }}
@@ -230,15 +230,15 @@ const Game = ({ game }) => {
           </div>
         </div>
         <div className="flex flex-col gap-4 w-full">
-          <div className="bg-slate-400 w-full h-[400px] rounded-xl">
+          <div className="bg-slate-400 w-full h-[400px] rounded-xl  max-sm:h-[250px]">
             {game.productBackPoster && (
               <Image
                 src={game.productBackPoster}
                 alt="Image"
-                height={100}
-                width={100}
+                height={400}
+                width={282}
                 loading="lazy"
-                className="w-full h-[400px] rounded-xl object-cover"
+                className="w-full h-[400px] rounded-xl object-fit  max-sm:h-[250px] "
               />
             )}
             {!game.productBackPoster && (

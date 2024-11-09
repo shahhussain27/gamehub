@@ -50,10 +50,10 @@ const Main = () => {
             <button className="flex items-center gap-2 hover:text-white">
               <GiShoppingBag />
               <h5>Wishlist</h5>
-              {wishlist.length <= 0 ? (
+              {wishlist.length === 0 ? (
                 ""
               ) : (
-                <span className="text-sm font-semibold text-black bg-blue-400 py-0 px-3 rounded-full">
+                <span className="text-sm font-semibold text-black bg-slate-200 py-0 px-3 rounded-full">
                   {wishlist.length}
                 </span>
               )}
@@ -63,10 +63,10 @@ const Main = () => {
             <button className="flex items-center gap-2 hover:text-white">
               <MdShoppingCart />
               <h5>Cart</h5>
-              {cart.length <= 0 ? (
+              {cart.length === 0 ? (
                 ""
               ) : (
-                <span className="text-sm font-semibold text-black bg-blue-400 py-0 px-3 rounded-full">
+                <span className="text-sm font-semibold text-black bg-slate-200 py-0 px-3 rounded-full">
                   {cart.length}
                 </span>
               )}
@@ -76,52 +76,66 @@ const Main = () => {
       </div>
 
       <div className="flex flex-wrap items-center justify-center overflow-y-scroll">
-        {gameData.length === 0 && (
-          <div className="my-8">
+        {gameData.length === 0 ? (
+          <div className="flex flex-col justify-start items-center gap-12 my-8">
+            <Image
+              src={"/no-data.svg"}
+              alt="empty cart"
+              height={200}
+              width={200}
+              className=" mix-blend-lighten"
+            />
             <h2 className="font-extrabold text-4xl text-center">
               GameHub has no content available right now.
             </h2>
           </div>
+        ) : (
+          <>
+            {gameData.filter((game) =>
+              game.productName.toLowerCase().includes(searchQuery.toLowerCase())
+            ).length === 0 ? (
+              <div className="flex flex-col justify-start max-sm:justify-center items-center w-full mt-12">
+                <Image
+                  src={SearchNotFound}
+                  alt="not found"
+                  width={200}
+                  height={200}
+                  className=" object-cover"
+                />
+                <div className="flex flex-col justify-center items-center gap-3 mt-4">
+                  <h3 className="text-white text-4xl font-semibol text-nowrap">
+                    No results found
+                  </h3>
+                  <h4 className="text-gray-400 text-center">
+                    Unfortunately I could not find any results matching your
+                    search.
+                  </h4>
+                </div>
+              </div>
+            ) : (
+              <>
+                {gameData
+                  .filter((game) =>
+                    game.productName
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                  )
+                  .map((game, index) => (
+                    <>
+                      <Card
+                        id={game._id}
+                        productFrontPoster={game.productFrontPoster}
+                        productPlatform={game.productPlatform}
+                        productName={game.productName}
+                        productPrice={game.productPrice}
+                      />
+                    </>
+                  ))}
+                <FreeGames />
+              </>
+            )}
+          </>
         )}
-
-        {gameData.filter((game) =>
-          game.productName.toLowerCase().includes(searchQuery.toLowerCase())
-        ).length === 0 && (
-          <div className="flex flex-col justify-start max-sm:justify-center items-center w-full mt-12">
-            <Image
-              src={SearchNotFound}
-              alt="not found"
-              width={200}
-              height={200}
-              className=" object-cover"
-            />
-            <div className="flex flex-col justify-center items-center gap-3 mt-4">
-              <h3 className="text-white text-4xl font-semibol text-nowrap">
-                No results found
-              </h3>
-              <h4 className="text-gray-400 text-center">
-                Unfortunately I could not find any results matching your search.
-              </h4>
-            </div>
-          </div>
-        )}
-
-        {gameData
-          .filter((game) =>
-            game.productName.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((game, index) => (
-            <>
-              <Card
-                id={game._id}
-                productFrontPoster={game.productFrontPoster}
-                productPlatform={game.productPlatform}
-                productName={game.productName}
-                productPrice={game.productPrice}
-              />
-            </>
-          ))}
-        <FreeGames />
       </div>
     </>
   );

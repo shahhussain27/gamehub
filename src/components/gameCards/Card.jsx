@@ -68,7 +68,25 @@ const Card = ({
           <h5 className="text-sm text-gray-400">{productPlatform}</h5>
           <h3 className="font-semibold text-lg text-white">{productName}</h3>
           <h2 className="text-white">
-            {productPrice > 0 ? `₹${productPrice}` : "Free"}
+            {productPrice > 0 ? (
+              <>
+                {productPrice === 1819 ? (
+                  <h5 className="flex gap-3">
+                    <span className="text-sm font-medium  text-black bg-slate-200 py-[2.5px] px-3 rounded-full">
+                      -20%
+                    </span>
+                    <p className="line-through text-gray-400">
+                      ₹{productPrice}
+                    </p>
+                    <p className="">₹{productPrice}</p>
+                  </h5>
+                ) : (
+                  `₹${productPrice}`
+                )}
+              </>
+            ) : (
+              "Free"
+            )}
           </h2>
         </div>
       </Link>
