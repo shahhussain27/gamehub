@@ -11,6 +11,7 @@ const Card = ({
   productPlatform,
   productName,
   productPrice,
+  productDiscount,
 }) => {
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Card = ({
           productName: productName,
           productPrice: productPrice,
           productPlatform: productPlatform,
+          productDiscount: productDiscount,
         })
       );
     }
@@ -70,18 +72,18 @@ const Card = ({
           <h2 className="text-white">
             {productPrice > 0 ? (
               <>
-                {productPrice === 1819 ? (
+                {productDiscount > 0 ? (
                   <h5 className="flex gap-3">
                     <span className="text-sm font-medium  text-black bg-slate-200 py-[2.5px] px-3 rounded-full">
-                      -20%
+                      -{productDiscount}%
                     </span>
                     <p className="line-through text-gray-400">
                       ₹{productPrice}
                     </p>
-                    <p className="">₹{productPrice}</p>
+                    <p className="">₹{productPrice - (productPrice * (productDiscount / 100))}</p>
                   </h5>
                 ) : (
-                  `₹${productPrice}`
+                  `₹${productPrice.toLocaleString() }`
                 )}
               </>
             ) : (

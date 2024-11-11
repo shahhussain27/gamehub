@@ -12,7 +12,15 @@ const cart = () => {
 
   useEffect(() => {
     const totalPrice = cart.reduce((acc, item) => acc + item.productPrice, 0);
+    const totalDiscount = cart.reduce(
+      (acc, item) =>
+        acc +
+        item.productPrice -
+        item.productPrice * (item.productDiscount / 100),
+      0
+    );
     setPrice(totalPrice);
+    setDiscount(totalDiscount);
   }, [cart]);
 
   return (
@@ -38,7 +46,7 @@ const cart = () => {
           <div className="w-full">
             {cart.map((items, index) => (
               <div
-                className="flex justify-between border border-slate-600 p-4 my-4 rounded-lg"
+                className="flex  justify-between border border-slate-600 p-4 my-4 rounded-lg max-sm:flex-col"
                 key={items.id}
               >
                 <div className="flex gap-4">
@@ -65,12 +73,66 @@ const cart = () => {
                     <h2 className="font-bold text-xl max-sm:text-lg">
                       {items.productName}
                     </h2>
+                    <div className="invisible max-sm:visible">
+                    {" "}
+                    {items.productPrice > 0 ? (
+                      <>
+                        {items.productDiscount > 0 ? (
+                          <h5 className="flex  gap-3">
+                            <span className="text-xs font-semibold text-black bg-slate-200 py-1 px-1.5 rounded-full">
+                              -{items.productDiscount}%
+                            </span>
+                            <p className="line-through text-gray-400">
+                              ₹{items.productPrice}
+                            </p>
+                            <p className="font-bold">
+                              ₹
+                              {items.productPrice -
+                                items.productPrice *
+                                  (items.productDiscount / 100)}
+                            </p>
+                          </h5>
+                        ) : (
+                          <p className="font-bold text-lg">
+                            ₹{items.productPrice}
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      "Free"
+                    )}
+                  </div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-between items-end h-[175px]">
-                  <div className="font-bold text-xl">
+                  <div className="max-sm:hidden">
                     {" "}
-                    {items.productPrice > 0 ? `₹${items.productPrice}` : "Free"}
+                    {items.productPrice > 0 ? (
+                      <>
+                        {items.productDiscount > 0 ? (
+                          <h5 className="flex  gap-3">
+                            <span className="text-xs font-semibold text-black bg-slate-200 py-1 px-1.5 rounded-full">
+                              -{items.productDiscount}%
+                            </span>
+                            <p className="line-through text-gray-400">
+                              ₹{items.productPrice}
+                            </p>
+                            <p className="font-bold">
+                              ₹
+                              {items.productPrice -
+                                items.productPrice *
+                                  (items.productDiscount / 100)}
+                            </p>
+                          </h5>
+                        ) : (
+                          <p className="font-bold text-lg">
+                            ₹{items.productPrice}
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      "Free"
+                    )}
                   </div>
                   <div className="flex gap-4">
                     <button
@@ -92,12 +154,14 @@ const cart = () => {
                 <tbody>
                   <tr>
                     <td className="font-normal">Price</td>
-                    <td className="text-right font-medium ">₹{price}</td>
+                    <td className="text-right font-medium ">
+                      ₹{price.toLocaleString()}
+                    </td>
                   </tr>
                   <tr>
                     <td className="font-normal ">Sale Discount</td>
                     <td className="text-right font-medium text-red-500 ">
-                      -₹{discount}
+                      -₹{(price - discount).toLocaleString()}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-800">
@@ -108,14 +172,23 @@ const cart = () => {
                   </tr>
                   <tr className="font-bold text-white">
                     <td className="pt-4">Subtotal</td>
-                    <td className="text-right  pt-4">₹{price - discount}</td>
+                    <td className="text-right  pt-4">
+                      ₹{discount.toLocaleString()}
+                    </td>
                   </tr>
                   <tr className="">
-                    <button className="btn-primary py-2.5 px-12 mt-6">
+                    <button className=" btn-primary py-2.5 px-12 mt-6" disabled={true}>
                       Check Out
                     </button>
                   </tr>
                 </tbody>
+                <div className="my-2 p-2 border border-slate-100 rounded">
+                  <p className="font-medium text-sm">
+                    Checkout functionality is coming soon! We are working hard
+                    to implement this feature and will have it ready in the
+                    coming days. Stay tuned for updates!
+                  </p>
+                </div>
               </table>
             </div>
           </div>

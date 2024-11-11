@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -10,12 +11,14 @@ import { CiGrid41 } from "react-icons/ci";
 import StarRatings from "react-star-ratings";
 import ColorThief from "colorthief";
 import { getBrightness, getVibrantColor } from "@/lib/colorExtraction";
+import Spinner from "./Spinner";
 
 const Game = ({ game }) => {
   const { data: session, status } = useSession();
   const [rating, setRating] = useState(2.4);
   const [buttonColor, setButtonColor] = useState("#fff1f2");
   const [textColor, setTextColor] = useState("#000000");
+  const [loading, setLoading] = useState(false);
   const imageRef = useRef(null);
   const router = useRouter();
   const wishlist = useSelector((state) => state.wishlist);
@@ -26,6 +29,7 @@ const Game = ({ game }) => {
   const isInCart = cart.some((item) => item.id === game._id);
 
   const buyGame = async (id, userEmail) => {
+    setLoading(true);
     try {
       const response = await fetch("/api/buyGame", {
         method: "POST",
@@ -38,6 +42,8 @@ const Game = ({ game }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const json = response.json();
+      setLoading(false);
+      router.reload();
     } catch (error) {
       console.error(error);
     }
@@ -62,6 +68,7 @@ const Game = ({ game }) => {
           productName: game.productName,
           productPrice: game.productPrice,
           productPlatform: game.productPlatform,
+          productDiscount: game.productDiscount,
         })
       );
     }
@@ -78,6 +85,7 @@ const Game = ({ game }) => {
           productName: game.productName,
           productPrice: game.productPrice,
           productPlatform: game.productPlatform,
+          productDiscount: game.productDiscount,
         })
       );
     }
@@ -86,6 +94,7 @@ const Game = ({ game }) => {
   useEffect(() => {
     const image = imageRef.current;
     const colorThief = new ColorThief();
+    document.title = game.productName;
 
     if (image) {
       image.onload = () => {
@@ -107,6 +116,10 @@ const Game = ({ game }) => {
 
   return (
     <>
+      <Head>
+        <title>{document.title}</title>
+        <meta name="description" content="example description" />
+      </Head>
       <div className="flex flex-col max-sm:justify-center max-sm:items-center px-32 my-8 max-sm:px-0">
         <h1 className="font-extrabold text-4xl max-sm:text-center mb-2">
           {game.productName}
@@ -135,7 +148,7 @@ const Game = ({ game }) => {
                 height={250}
                 width={250}
                 loading="lazy"
-                className="w-[250px] h-[250px] rounded-lg object-fit"
+                className="w-auto h-auto rounded-lg object-fit"
               />
             )}
             {!game.productImage && (
@@ -145,8 +158,35 @@ const Game = ({ game }) => {
             )}
           </div>
 
-          <h2 className="font-bold text-lg">
-            {game.productPrice > 0 ? `₹${game.productPrice}` : "Free"}
+          <h2 className="">
+            {game.productPrice > 0 ? (
+              <>
+                {game.productDiscount > 0 ? (
+                  <h5 className="flex gap-3">
+                    <span
+                      className="text-xs font-semibold py-1 px-1.5 rounded-full"
+                      style={{ backgroundColor: buttonColor, color: textColor }}
+                    >
+                      -{game.productDiscount}%
+                    </span>
+                    <p className="line-through text-gray-400">
+                      ₹{game.productPrice}
+                    </p>
+                    <p className="font-bold">
+                      ₹
+                      {game.productPrice -
+                        game.productPrice * (game.productDiscount / 100)}
+                    </p>
+                  </h5>
+                ) : (
+                  <p className="font-bold text-lg">
+                    ₹{game.productPrice.toLocaleString()}
+                  </p>
+                )}
+              </>
+            ) : (
+              "Free"
+            )}
           </h2>
 
           {game.productFileURL && (
@@ -156,15 +196,22 @@ const Game = ({ game }) => {
               onClick={() => onDownload(game._id)}
               style={{ backgroundColor: buttonColor, color: textColor }}
             >
-              {game.productDownloads.includes(session.user?.email) ? (
-                <>
-                  <CiGrid41 className="text-lg" /> In Libaray
-                </>
+              {loading ? (
+                <Spinner color={textColor} />
               ) : (
-                `${game.productPrice > 0 ? "Buy Now" : "Get"}`
+                <>
+                  {game.productDownloads.includes(session.user?.email) ? (
+                    <>
+                      <CiGrid41 className="text-lg" /> In Libaray
+                    </>
+                  ) : (
+                    `${game.productPrice > 0 ? "Buy Now" : "Get"}`
+                  )}
+                </>
               )}
             </button>
           )}
+
           {!game.productFileURL && (
             <button className="font-medium text-center text-slate-500 border border-slate-600  py-3 rounded-lg hover:opacity-95 cursor-not-allowed">
               Coming Soon
@@ -180,15 +227,15 @@ const Game = ({ game }) => {
                 onClick={handleCartToggle}
                 className={`${
                   game.productFileURL
-                    ? "font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
+                    ? "flex justify-center items-center font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
                     : "hidden"
                 }`}
               >
-                {isInCart ? "View In Cart" : "Add To Cart "}
+                <>{isInCart ? "View In Cart" : "Add To Cart "}</>
               </button>
               <button
                 onClick={handleWishlistToggle}
-                className="font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
+                className="flex justify-center items-center font-medium bg-slate-700 py-3 rounded-lg hover:bg-slate-600"
               >
                 {isInWishlist ? "In Wishlist" : "Add to Wishlist"}
               </button>

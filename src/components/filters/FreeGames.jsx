@@ -33,7 +33,7 @@ const FreeGames = () => {
   }, []);
 
   return (
-    <section className="scale-75 rounded-lg border-t border-slate-700 py-4">
+    <section className="scale-75 rounded-lg border-t border-slate-700 py-4 ">
       <div className="flex justify-between text-3xl mb-8 mx-28 max-sm:mx-4">
         <div className="flex gap-4 items-center font-bold ">
           <h3>Free Games</h3>

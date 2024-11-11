@@ -128,6 +128,7 @@ const Main = () => {
                         productPlatform={game.productPlatform}
                         productName={game.productName}
                         productPrice={game.productPrice}
+                        productDiscount={game.productDiscount}
                       />
                     </>
                   ))}

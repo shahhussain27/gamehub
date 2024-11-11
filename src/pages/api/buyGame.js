@@ -16,11 +16,36 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: "Not Found" });
       }
 
+      let downloadDate = new Date();
+      let paymentAmount = product.productPrice;
+      let ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+      if (product.productPrice > 0 && product.productDiscount > 0) {
+        let discount = product.productPrice * (product.productDiscount / 100);
+        paymentAmount = product.productPrice - discount;
+      }
+
+      if (ip.startsWith("::ffff:")) {
+        ip = ip.split("::ffff:")[1];
+      }
+
+      const geoLocationAPI = `http://ip-api.com/json/${ip}`;
+      const response = await fetch(geoLocationAPI);
+      const locationData = await response.json();
+      const userDownloadLocation = `${locationData.country || "unknown"}, ${
+        locationData.city || "unknown "
+      }`;
+
       user.library = user.library || [];
       product.productDownloads = product.productDownloads || [];
 
       user.library.push(id);
-      product.productDownloads.push(userEmail);
+      product.productDownloads.push({
+        userEmail: userEmail,
+        userDownloandDate: downloadDate,
+        userDonwloadLocation: userDownloadLocation,
+        userPayment: paymentAmount,
+      });
 
       await user.save();
       await product.save();
