@@ -200,7 +200,9 @@ const Game = ({ game }) => {
                 <Spinner color={textColor} />
               ) : (
                 <>
-                  {game.productDownloads.includes(session.user?.email) ? (
+                  {game.productDownloads.some(
+                    (download) => download.userEmail === session.user?.email
+                  ) ? (
                     <>
                       <CiGrid41 className="text-lg" /> In Libaray
                     </>
