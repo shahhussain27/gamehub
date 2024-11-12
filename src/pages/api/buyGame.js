@@ -1,5 +1,5 @@
 import Product from "../../../lib/models/Product";
-import User from "../../../lib/models/User";
+import UserLibrary from "../../../lib/models/UserLibrary";
 import { connectToDB } from "../../../lib/mongodb/mongoose";
 
 export default async function handler(req, res) {
@@ -10,21 +10,27 @@ export default async function handler(req, res) {
       await connectToDB();
 
       const product = await Product.findById(id);
-      const user = await User.findOne({ email: userEmail });
 
-      if (!product || !user) {
+      if (!product) {
         return res.status(404).json({ error: "Not Found" });
+      }
+
+      const libraryEntry = await UserLibrary.findOne({ userEmail, gameId: id });
+      if (libraryEntry) {
+        return res
+          .status(422)
+          .json({ error: "This game is already in your library" });
       }
 
       let downloadDate = new Date();
       let paymentAmount = product.productPrice;
-      let ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
       if (product.productPrice > 0 && product.productDiscount > 0) {
         let discount = product.productPrice * (product.productDiscount / 100);
         paymentAmount = product.productPrice - discount;
       }
 
+      let ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
       if (ip.startsWith("::ffff:")) {
         ip = ip.split("::ffff:")[1];
       }
@@ -32,14 +38,19 @@ export default async function handler(req, res) {
       const geoLocationAPI = `http://ip-api.com/json/${ip}`;
       const response = await fetch(geoLocationAPI);
       const locationData = await response.json();
-      const userDownloadLocation = `${locationData.country || "unknown"}, ${
-        locationData.city || "unknown "
-      }`;
+      const userDownloadLocation = {
+        country: locationData.country || "unknown",
+        city: locationData.city || "unknown",
+      };
 
-      user.library = user.library || [];
+      await UserLibrary.create({
+        userEmail: userEmail,
+        gameId: id,
+        purchaseDate: downloadDate,
+      });
+
       product.productDownloads = product.productDownloads || [];
 
-      user.library.push(id);
       product.productDownloads.push({
         userEmail: userEmail,
         userDownloandDate: downloadDate,
@@ -47,7 +58,6 @@ export default async function handler(req, res) {
         userPayment: paymentAmount,
       });
 
-      await user.save();
       await product.save();
 
       res.status(200).json({ game: product });

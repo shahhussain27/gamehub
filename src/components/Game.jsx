@@ -15,7 +15,7 @@ import Spinner from "./Spinner";
 
 const Game = ({ game }) => {
   const { data: session, status } = useSession();
-  const [rating, setRating] = useState(2.4);
+  const [rating, setRating] = useState(0.0);
   const [buttonColor, setButtonColor] = useState("#fff1f2");
   const [textColor, setTextColor] = useState("#000000");
   const [loading, setLoading] = useState(false);
@@ -94,6 +94,7 @@ const Game = ({ game }) => {
   useEffect(() => {
     const image = imageRef.current;
     const colorThief = new ColorThief();
+    const ratings = game.productRatings;
     document.title = game.productName;
 
     if (image) {
@@ -111,6 +112,16 @@ const Game = ({ game }) => {
           setTextColor("#000000");
         }
       };
+    }
+
+    if (ratings && ratings.length > 0) {
+      const totalRating = ratings.reduce(
+        (acc, rating) => acc + rating.userRating,
+        0
+      );
+      const averageRating = totalRating / ratings.length;
+
+      setRating(averageRating);
     }
   }, [game.productImage]);
 
@@ -192,7 +203,9 @@ const Game = ({ game }) => {
           {game.productFileURL && (
             <button
               className="disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 font-medium text-center  py-3 rounded-lg hover:opacity-90 cursor-pointer"
-              disabled={game.productDownloads.includes(session.user?.email)}
+              disabled={game.productDownloads.some(
+                (download) => download.userEmail === session.user?.email
+              )}
               onClick={() => onDownload(game._id)}
               style={{ backgroundColor: buttonColor, color: textColor }}
             >
@@ -220,7 +233,9 @@ const Game = ({ game }) => {
             </button>
           )}
 
-          {game.productDownloads.includes(session.user?.email) ? (
+          {game.productDownloads.some(
+            (download) => download.userEmail === session.user?.email
+          ) ? (
             ""
           ) : (
             <>
