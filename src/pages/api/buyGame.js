@@ -41,6 +41,7 @@ export default async function handler(req, res) {
       const userDownloadLocation = {
         country: locationData.country || "unknown",
         city: locationData.city || "unknown",
+        countryCode: locationData.countryCode || "unknown",
       };
 
       await UserLibrary.create({
