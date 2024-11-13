@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
       if (product.productPrice > 0 && product.productDiscount > 0) {
         let discount = product.productPrice * (product.productDiscount / 100);
-        paymentAmount = product.productPrice - discount;
+        return paymentAmount = product.productPrice - discount;
       }
 
       let ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -64,6 +64,7 @@ export default async function handler(req, res) {
         userEmail: userEmail,
         userDownloandDate: downloadDate,
         userDonwloadLocation: userDownloadLocation,
+        userPayment: paymentAmount,
       });
 
       await Product.findByIdAndUpdate(
