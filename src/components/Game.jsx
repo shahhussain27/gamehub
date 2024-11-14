@@ -145,7 +145,7 @@ const Game = ({ game }) => {
             numberOfStars={5}
             name="rating"
           />
-          <h2 className="">{rating}</h2>
+          <h2 className="">{rating.toFixed(1)}</h2>
         </div>
       </div>
       <section className="flex flex-row-reverse max-sm:flex-col items-start gap-16 px-32 max-sm:px-0">

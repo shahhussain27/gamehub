@@ -60,6 +60,7 @@ const FreeGames = () => {
         breakpoints={{
           640: {
             slidesPerView: 1,
+          
           },
           768: {
             slidesPerView: 4,

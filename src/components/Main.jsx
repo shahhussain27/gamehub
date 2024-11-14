@@ -35,7 +35,7 @@ const Main = () => {
     <Loader />
   ) : (
     <>
-      <div className="flex items-start justify-around w-full max-sm:flex-col max-sm:items-center">
+      <div className="flex items-start justify-around w-full max-sm:flex-col max-sm:items-center max-sm:pb-4">
         <div className="flex  justify-start w-full max-w-md bg-slate-800 rounded-full shadow-sm mb-4">
           <input
             type="search"
