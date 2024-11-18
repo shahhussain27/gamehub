@@ -4,7 +4,7 @@ import { connectToDB } from "../../../lib/mongodb/mongoose";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const { userEmail } = req.body;
+      const { userEmail } = req.query;
 
       await connectToDB();
 
