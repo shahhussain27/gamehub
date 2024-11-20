@@ -28,6 +28,7 @@ export const cartSlice = createSlice({
       saveCartToLocalStorage(state);
     },
     removeToCart: (state, action) => {
+      console.log(state)
       const updatedState =  state.filter((item) => item.id !== action.payload);
       saveCartToLocalStorage(updatedState);
       return updatedState;
