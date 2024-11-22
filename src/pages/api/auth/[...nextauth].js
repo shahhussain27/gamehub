@@ -25,7 +25,7 @@ export const authOptions = {
         });
 
         if (user && (await compare(credentials.password, user.password))) {
-          return { email: user.email, name: user.name  };
+          return { email: user.email, name: user.name };
         }
 
         return null;
@@ -33,7 +33,6 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-   
     async redirect({ url, baseUrl }) {
       return Promise.resolve("/");
     },
