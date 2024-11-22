@@ -34,7 +34,11 @@ export const authOptions = {
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return Promise.resolve("/");
+      if (url.includes("/signin")) {
+        return url;
+      } else {
+        return Promise.resolve("/");
+      }
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
